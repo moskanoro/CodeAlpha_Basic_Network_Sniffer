@@ -4,7 +4,7 @@ from scapy.all import *
 from prettytable import PrettyTable
 
 
-def handle_packet(packet, output_file=None):
+def packet_callback(packet, output_file=None):
     output_table = PrettyTable()
     output_table.field_names = ["Timestamp", "Packet Type", "Source", "Destination", "Protocol", "Details"]
 
@@ -55,17 +55,21 @@ def handle_packet(packet, output_file=None):
         with PcapWriter(output_file, append=True) as pcap_writer:
             pcap_writer.write(packet)
 
-def run_sniffer(interface="eth0", count=None, output_file=None, filters=None):
+def start_sniffer(interface="eth0", count=None, output_file=None, filters=None):
     if count is None:
-        count = 99999999  # Use a large number as default count
+        count = 99999999  # Set count to a large number if None
     packets = []
-    filter_str = " or ".join([f"({filter})" for filter in filters.split(",")]) if filters else ""
-
+    if filters is None:
+        filter_str = ""
+    else:
+        filter_str = " or ".join([f"({filter})" for filter in filters.split(",")])
     try:
-        sniffed_packets = sniff(iface=interface, filter=filter_str, prn=lambda pkt: handle_packet(pkt, output_file), count=count, store=False)
-        packets.extend(sniffed_packets)
-    except KeyboardInterrupt:
-        pass  # Graceful exit on Ctrl+C
+        sniffed_packets = sniff(iface=interface, filter=filter_str, prn=lambda pkt: packet_callback(pkt, output_file), count=count, store=False)
+        for packet in sniffed_packets:
+            packets.append(packet)
+#            print(packet)
+    except KeyboardInterrupt:  # Handle KeyboardInterrupt exception
+        pass  # Do nothing when Ctrl+C is pressed
 
 parser = argparse.ArgumentParser(description="Network Sniffer")
 
@@ -75,7 +79,10 @@ parser.add_argument("-w", "--write", help="Output file (in .pcap format)")
 parser.add_argument("-f", "--filters", help="Protocol and port filters separated by comma (e.g., icmp,tcp,udp)")
 
 args = parser.parse_args()
-filters = args.filters.lower() if args.filters else None
 
-run_sniffer(interface=args.interface, count=args.count, output_file=args.write, filters=filters)
+if args.filters:
+    filters = args.filters.lower()
+else:
+    filters = None
 
+start_sniffer(interface=args.interface, count=args.count, output_file=args.write, filters=filters)
