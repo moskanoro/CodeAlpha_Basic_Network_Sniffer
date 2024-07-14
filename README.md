@@ -34,7 +34,7 @@ This repository contains a basic network sniffer script written in Python for an
 ## Usage
 
 ```bash
-sudo sniffer -i <interface> -c <count> -f <filters> -w <output_file>
+sudo moskanor_code_alpha_sniffer.py -i <interface> -c <count> -f <filters> -w <output_file>
 ```
 
 ### Options:
@@ -64,29 +64,29 @@ sudo sniffer -i <interface> -c <count> -f <filters> -w <output_file>
 2.  Capture 100 packets on the `eth0` interface and save the output to a file named `output.pcap`:
     
     ```
-    sudo sniffer -i eth0 -c 100 -w output.pcap
+    sudo moskanor_code_alpha_sniffer.py -i eth0 -c 100 -w output.pcap
     ```
     
 3.  Capture only ICMP packets:
     
     ```
-    sudo sniffer -f icmp
+    sudo moskanor_code_alpha_sniffer.py -f icmp
     ```
     
 4.  Capture TCP packets on port 80:
     
     ```
-    sudo sniffer -f "tcp port 80"
+    sudo moskanor_code_alpha_sniffer.py -f "tcp port 80"
     ```
 5. Capture TCP packets on port 80 and UDP packets on port 53:
     ```
-    sudo sniffer -i eth0 -c 100 -f "tcp port 80 or udp port 53" -w DNS_HTTP.pcap
+    sudo moskanor_code_alpha_sniffer.py -i eth0 -c 100 -f "tcp port 80 or udp port 53" -w DNS_HTTP.pcap
     or
-    sudo sniffer -i eth0 -c 100 -f "tcp port 80,udp port 53" -w DNS_HTTP.pcap
+    sudo moskanor_code_alpha_sniffer.py -i eth0 -c 100 -f "tcp port 80,udp port 53" -w DNS_HTTP.pcap
     ```
 6. Capture ICMP and ARP packets:
    ```
-   sudo sniffer -i eth0 -c 100 -f "icmp,arp" -w ICMP_ARP.pcap
+   sudo moskanor_code_alpha_sniffer.py -i eth0 -c 100 -f "icmp,arp" -w ICMP_ARP.pcap
    ```
 ## Dependencies
 
