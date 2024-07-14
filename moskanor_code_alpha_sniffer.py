@@ -3,15 +3,6 @@ import argparse
 from scapy.all import *
 from prettytable import PrettyTable
 
-banner = """   _____          _               _       _            _____       _  __  __          
-  / ____|        | |        /\   | |     | |          / ____|     (_)/ _|/ _|         
- | |     ___   __| | ___   /  \  | |_ __ | |__   __ _| (___  _ __  _| |_| |_ ___ _ __ 
- | |    / _ \ / _` |/ _ \ / /\ \ | | '_ \| '_ \ / _` |\___ \| '_ \| |  _|  _/ _ \ '__|
- | |___| (_) | (_| |  __// ____ \| | |_) | | | | (_| |____) | | | | | | | ||  __/ |   
-  \_____\___/ \__,_|\___/_/    \_\_| .__/|_| |_|\__,_|_____/|_| |_|_|_| |_| \___|_|   
-                                   | |                                                
-                                   |_|       """
-print(banner)
 
 def handle_packet(packet, output_file=None):
     output_table = PrettyTable()
